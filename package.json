@@ -1,0 +1,40 @@
+{
+  "name": "idle",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "chriscauley <chris@lablackey.com>",
+  "license": "MIT",
+  "scripts": {
+    "develop": "parcel client/index.html -p 8596 --public-url /static/ --no-hmr",
+    "lint": "yarn eslint client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chriscauley/idle.git"
+  },
+  "dependencies": {
+    "@unrest/core": "chriscauley/unrest-core",
+    "@unrest/css": "chriscauley/unrest-css",
+    "@unrest/react-auth": "chriscauley/unrest-react-auth",
+    "@unrest/react-jsonschema-form": "chriscauley/unrest-react-jsonschema-form",
+    "@unrest/react-rest-hook": "chriscauley/unrest-react-rest-hook",
+    "@unrest/tailwind": "chriscauley/unrest-tailwindcss",
+    "parcel": "^1.12.4",
+    "react": "^16.13.1",
+    "react-router-dom": "^5.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-0",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.19.0",
+    "prettier": "^2.0.5",
+    "sass": "^1.26.3"
+  }
+}
