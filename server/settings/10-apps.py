@@ -14,6 +14,7 @@ INSTALLED_APPS = [
 
     # this project
     'server',
+    'media',
 
     # unrest
     'unrest',
