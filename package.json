@@ -17,10 +17,11 @@
     "@unrest/css": "chriscauley/unrest-css",
     "@unrest/react-auth": "chriscauley/unrest-react-auth",
     "@unrest/react-jsonschema-form": "chriscauley/unrest-react-jsonschema-form",
+    "@unrest/react-progress-bar": "^0.0.2",
     "@unrest/react-rest-hook": "chriscauley/unrest-react-rest-hook",
     "@unrest/tailwind": "chriscauley/unrest-tailwindcss",
     "parcel": "^1.12.4",
-    "react": "^16.13.1",
+    "react": ">=15",
     "react-router-dom": "^5.2.0"
   },
   "devDependencies": {

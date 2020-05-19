@@ -944,18 +944,17 @@
 "@unrest/react-auth@chriscauley/unrest-react-auth":
   version "0.0.1"
   resolved "https://codeload.github.com/chriscauley/unrest-react-auth/tar.gz/b56518b172c3d0623a9b7cf5366c2d8c576b63e4"
-
-"@unrest/react-core@chriscauley/unrest-react-core":
-  version "0.0.2"
-  resolved "https://codeload.github.com/chriscauley/unrest-react-core/tar.gz/407601010b8fd7f90d47a5934c71d0186620c939"
+  dependencies:
+    "@unrest/css" chriscauley/unrest-css
 
 "@unrest/react-jsonschema-form@chriscauley/unrest-react-jsonschema-form":
   version "0.0.2"
   resolved "https://codeload.github.com/chriscauley/unrest-react-jsonschema-form/tar.gz/480a274f8d81ac4281dba8c5359b5deaff191e37"
 
-"@unrest/react-progress-bar@chriscauley/unrest-react-progress-bar":
+"@unrest/react-progress-bar@^0.0.2":
   version "0.0.2"
-  resolved "https://codeload.github.com/chriscauley/unrest-react-progress-bar/tar.gz/eac8ad3c98888041c47430394f61de185f484692"
+  resolved "https://registry.yarnpkg.com/@unrest/react-progress-bar/-/react-progress-bar-0.0.2.tgz#cbfbea8da8fb1226852966f648a4113bd86a6afb"
+  integrity sha512-4XFxD9HOFAxWwWHWFhYOGxvINWtlAfTeNRCwUu+ctUd/dloBzBJiJfojFn6+cDZ3jTosPjb3mzF+RU8KQwDH2Q==
 
 "@unrest/react-rest-hook@chriscauley/unrest-react-rest-hook":
   version "0.0.2"
@@ -4878,7 +4877,7 @@ react-router@5.2.0:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
-react@>=15, react@^16.13.1:
+react@>=15:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"
   integrity sha512-YMZQQq32xHLX0bz5Mnibv1/LHb3Sqzngu7xstSM+vrkE5Kzr9xE0yMByK5kMoTK30YVJE61WfbxIFFvfeDKT1w==

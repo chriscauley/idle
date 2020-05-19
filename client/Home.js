@@ -1,10 +1,11 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+
+import { alert } from '@unrest/core'
 
 export default function Home() {
   return (
     <div>
-      Woo!
+      <alert.TestAlert />
     </div>
   )
 }
