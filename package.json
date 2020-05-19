@@ -20,8 +20,10 @@
     "@unrest/react-progress-bar": "^0.0.2",
     "@unrest/react-rest-hook": "chriscauley/unrest-react-rest-hook",
     "@unrest/tailwind": "chriscauley/unrest-tailwindcss",
+    "classnames": "^2.2.6",
     "parcel": "^1.12.4",
     "react": ">=15",
+    "react-jsonschema-form": "^1.8.1",
     "react-router-dom": "^5.2.0"
   },
   "devDependencies": {
