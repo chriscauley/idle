@@ -5,6 +5,7 @@ from django.urls import path, re_path, include
 
 from unrest.views import spa
 from media.views import delete_photo
+import todo.forms
 
 urlpatterns = [
     path('admin/', admin.site.urls),

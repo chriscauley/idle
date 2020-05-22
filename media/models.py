@@ -44,6 +44,9 @@ class Photo(BaseModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     src = models.ImageField(upload_to="photo")
 
+    action = models.ForeignKey('todo.Action', null=True, blank=True, on_delete=models.SET_NULL)
+    activity = models.ForeignKey('todo.Activity', null=True, blank=True, on_delete=models.SET_NULL)
+    thing = models.ForeignKey('todo.Thing', null=True, blank=True, on_delete=models.SET_NULL)
     point = models.PointField(null=True, blank=True)
     datetime = models.DateTimeField(null=True, blank=True)
     DATASOURCE_CHOICES = _choices(['exif', 'exifgps', 'database', 'error'])

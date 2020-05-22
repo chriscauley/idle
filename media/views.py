@@ -6,13 +6,17 @@ from unrest.user.views import user_json
 from unrest.decorators import login_required
 
 from media.models import Photo, PhotoCrop
+from todo.models import Activity, Action
 import media.forms
 
 def add_photos(user):
     photos = Photo.objects.filter(user=user)
-    photos = [p.to_json(['id', 'src', 'thumbnail']) for p in photos]
+    activities = Activity.objects.filter(user=user)
+    actions = Action.objects.filter(user=user)
     return {
-        'photos': photos,
+        'activities': [a.to_json(['id', 'name']) for a in activities],
+        'actions': [a.to_json(['id', 'activity_id']) for a in actions],
+        'photos': [p.to_json(['id', 'src', 'thumbnail', 'activity_id', 'action_id', 'thing_id']) for p in photos],
     }
 
 

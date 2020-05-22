@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'unrest',
     'unrest.nopass',
     'unrest.user',
+    'todo',
 ]
 
 AUTH_USER_MODEL = 'user.User'
