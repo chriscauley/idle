@@ -96,6 +96,10 @@ class Photo(BaseModel):
     def thumbnail(self):
         return get_thumbnail(self.src, 'x650', crop='center').url
 
+    @property
+    def admin_thumbnail(self):
+        return get_thumbnail(self.src, 'x300', crop='center').url
+
     class Meta:
         ordering = ('-datetime', )
 
