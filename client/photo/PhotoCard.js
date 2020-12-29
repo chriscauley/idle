@@ -7,18 +7,17 @@ import { post } from '@unrest/core'
 import { ZoomButton } from './Zoom'
 import DeleteButton from '../DeleteButton'
 
-const isOwner = (_id, user) => user && user.photos.find((p) => p.id === _id)
-
-const PhotoCard = (props) => {
-  const { src, thumbnail, id, onDelete, auth, location } = props
-  const owner = isOwner(id, auth.user)
+export default function PhotoCard(props) {
+  const { src, thumbnail, id, onDelete, location } = props
+  const { user } = auth.use()
+  const is_owner = user?.photos.find((p) => p.id === id)
   const deletePhoto = () => post('/api/media/photo/delete/', { id })
   return (
     <div className="px-2 mb-4 w-full sm:w-1/2 lg:w-1/3">
       <div className="relative">
         <div className="absolute top-0 right-0 m-4">
           <ZoomButton src={src} />
-          {owner && (
+          {is_owner && (
             <DeleteButton
               action={deletePhoto}
               onDelete={onDelete}
@@ -28,7 +27,7 @@ const PhotoCard = (props) => {
         </div>
         <img src={thumbnail} />
         <div className="absolute bottom-0 right-0 m-4">
-          {owner && (
+          {is_owner && (
             <>
               <Link to={`/photo/crop/${id}/`} className={css.button()}>
                 <i className={css.icon('crop')} />
@@ -47,5 +46,3 @@ const PhotoCard = (props) => {
     </div>
   )
 }
-
-export default auth.connect(PhotoCard)
