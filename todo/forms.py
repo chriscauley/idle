@@ -1,6 +1,7 @@
 from django import forms
 
 from todo.models import Action, Activity
+from todo.models import Project, Activity, Task
 from media.models import Photo
 from unrest import schema
 
@@ -29,5 +30,59 @@ class ActionForm(forms.Form):
         self.photo.activity = activity
         self.photo.action = action
         self.photo.save()
-        print(new, activity, name, self.photo)
         return action
+
+@schema.register
+class ProjectForm(forms.ModelForm):
+    def save(self, *args, **kwargs):
+        self.instance.user = self.request.user
+        return super().save(*args, **kwargs)
+    class Meta:
+        model = Project
+        fields = ['name']
+
+@schema.register
+class ActivityForm(forms.ModelForm):
+    def save(self, *args, **kwargs):
+        self.instance.user = self.request.user
+        return super().save(*args, **kwargs)
+    class Meta:
+        model = Activity
+        fields = ['data']
+
+def validate_user_owns(user, model, id):
+    item = model.objects.filter(user=user, id=id).first()
+    if id and not item:
+        raise ValidationError(f'User does not have permission to edit {model.__name__} #{id}')
+    return item
+
+def get_users_object(user, model, id):
+    return model.objects.get(user=user, id=id)
+
+@schema.register
+class TaskForm(forms.ModelForm):
+    def clean_data(self):
+        data = self.cleaned_data['data']
+        self._project = validate_user_owns(self.request.user, Project, data.get('project_id'))
+        self._activity = validate_user_owns(self.request.user, Activity, data.get('activity_id'))
+        if data.get('create_activity') and not self._project:
+            raise ValidationError('Cannot create activity without a project.')
+        return data
+    def save(self, *args, **kwargs):
+        data = self.cleaned_data['data']
+        activity_id = data.pop('activity_id', None)
+        project_id = data.pop('project_id', None)
+        create_activity = data.pop('create_activity', None)
+        if create_activity:
+            activity_id = Activity.objects.create(
+                name=self.instance.name,
+                user=self.request.user,
+                project_id=project_id
+            ).id
+        self.instance.activity_id = activity_id
+        self.instance.project_id = project_id
+        self.instance.user = self.request.user
+        return super().save(*args, **kwargs)
+    class Meta:
+        model = Task
+        fields = ['name', 'data']
