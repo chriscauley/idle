@@ -3,10 +3,12 @@ import ReactDOM from 'react-dom'
 import { HashRouter, Route } from 'react-router-dom'
 import { alert } from '@unrest/core'
 import auth from '@unrest/react-auth'
-import photo from './photo'
 
+import photo from './photo'
 import Home from './Home'
 import Nav from './Nav'
+import ProjectForm from './task/ProjectForm'
+import ProjectDetail from './task/ProjectDetail'
 
 // TODO this is where photos, activities, actions, and things can be cross associated
 auth.config.prepData = (data) => {
@@ -22,6 +24,9 @@ const App = () => {
       <Nav />
       <div className="app-content">
         <Route exact path="/" component={Home} />
+        <Route exact path={'/project/:id/'} component={ProjectDetail} />
+        <Route exact path={'/project/new/'} component={ProjectForm} />
+        <Route exact path={'/project/:id/edit/'} component={ProjectForm} />
       </div>
       <alert.List />
       <photo.BulkUpload />
