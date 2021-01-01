@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import css from '@unrest/css'
+import createTasks from './createTasks'
 
 import TaskRow from './TaskRow'
 import TaskForm from './TaskForm'
@@ -12,6 +13,7 @@ export default function ProjectDetail(props) {
   let { tasks = [] } = api.task.use()
   const id = parseInt(props.match.params.id)
   const project = projects.find((p) => p.id === id)
+  createTasks()
   if (!project) {
     return null
   }
