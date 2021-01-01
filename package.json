@@ -21,11 +21,13 @@
     "@unrest/react-rest-hook": "chriscauley/unrest-react-rest-hook",
     "@unrest/tailwind": "chriscauley/unrest-tailwindcss",
     "classnames": "^2.2.6",
+    "date-fns": "^2.16.1",
     "parcel": "^1.12.4",
     "react": ">=16.3.0",
     "react-autosuggest": "^10.0.2",
     "react-jsonschema-form": "2.0.0-alpha.1",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "tailwindcss": "1.4.5"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-0",
