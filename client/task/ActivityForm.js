@@ -27,11 +27,14 @@ const prepSchema = (schema) => {
 
 export default function ActivityForm(props) {
   const { id } = props.match.params
-  const [_, { success }] = alert.useAlert()
+  const { success } = alert.use()
+  const { refetch } = api.task.use()
   const form_name = `ActivityForm${id ? '/' + id : ''}`
   const onSuccess = () => {
-    api.project.markStale()
+    api.activity.markStale()
+    refetch()
     success('form saved!')
+    props.history.replace(`/activity/${id}`)
   }
 
   const prepData = ({ name, ...data }) => {

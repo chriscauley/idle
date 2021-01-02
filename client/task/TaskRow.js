@@ -95,10 +95,12 @@ export default function TaskRow({ task }) {
 
   return (
     <li className={css.list.item('flex-wrap')} key={task.id}>
-      <i
-        className={css.icon(getTaskIcon(task) + ' trigger')}
-        onClick={() => trigger({ activity, task, refetch })}
-      />
+      <div className="trigger">
+        <i
+          className={css.icon(getTaskIcon(task))}
+          onClick={() => trigger({ activity, task, refetch })}
+        />
+      </div>
       <span className="name">
         {task.name}
         <div className="light">{getTaskTime(task)}</div>
