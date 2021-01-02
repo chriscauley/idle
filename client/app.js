@@ -8,6 +8,7 @@ import photo from './photo'
 import Home from './Home'
 import Nav from './Nav'
 import ProjectForm from './task/ProjectForm'
+import ActivityForm from './task/ActivityForm'
 import ProjectDetail from './task/ProjectDetail'
 
 // TODO this is where photos, activities, actions, and things can be cross associated
@@ -27,6 +28,7 @@ const App = () => {
         <Route exact path={'/project/:id/'} component={ProjectDetail} />
         <Route exact path={'/project/new/'} component={ProjectForm} />
         <Route exact path={'/project/:id/edit/'} component={ProjectForm} />
+        <Route exact path={'/activity/:id/edit/'} component={ActivityForm} />
       </div>
       <alert.List />
       <photo.BulkUpload />

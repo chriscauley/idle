@@ -60,16 +60,23 @@ def validate_user_owns(user, model, id):
 def get_users_object(user, model, id):
     return model.objects.get(user=user, id=id)
 
-@schema.register
-class TaskForm(forms.ModelForm):
+
+class DataForm(forms.ModelForm):
     def clean_data(self):
         data = self.instance.data
+        print(self.cleaned_data)
         data.update(self.cleaned_data['data'])
+        for key in data.keys():
+            if key is None:
+                data.pop(key)
         self._project = validate_user_owns(self.request.user, Project, data.get('project_id'))
         self._activity = validate_user_owns(self.request.user, Activity, data.get('activity_id'))
         if data.get('create_activity') and not (self._project or self.instance.project):
             raise forms.ValidationError('Cannot create activity without a project.')
         return data
+
+@schema.register
+class TaskForm(DataForm):
     def save(self, *args, **kwargs):
         data = self.cleaned_data['data']
         activity_id = data.pop('activity_id', None)
@@ -89,3 +96,16 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['name', 'data']
+
+@schema.register
+class ActiveTaskForm(DataForm):
+    def __init__(self, *args, **kwargs):
+        if len(args) > 0:
+            data = args[0]
+            if 'data' not in data:
+                data = { 'data': data }
+            args = [data] + list(args[1:])
+        return super().__init__(*args, **kwargs)
+    class Meta:
+        model = Task
+        fields = ['data']

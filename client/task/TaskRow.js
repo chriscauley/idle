@@ -49,13 +49,25 @@ const getLinks = (task, activity, refetch) => {
   return links
 }
 
-function ActiveTaskForm({ task }) {
-  const prepSchema = (schema) => {
-    return schema
+function ActiveTaskForm({ task, activity }) {
+  const prepSchema = () => {
+    const properties = {}
+    activity.measurements?.forEach((s) => {
+      properties[s] = {
+        type: 'number',
+        default: task[s],
+      }
+    })
+    return { type: 'object', properties }
   }
   return (
     <div className="flex-grow w-full">
-      <SchemaForm prepSchema={prepSchema} form_name={`TaskForm/${task.id}`} />
+      <SchemaForm
+        prepSchema={prepSchema}
+        form_name={`ActiveTaskForm/${task.id}`}
+        autosubmit={true}
+        customButton={true}
+      />
     </div>
   )
 }
@@ -96,7 +108,9 @@ export default function TaskRow({ task }) {
         links={getLinks(task, activity, refetch)}
         title={<i className={css.icon('ellipsis-v')} />}
       />
-      {task.started && !task.completed && <ActiveTaskForm {...{ task }} />}
+      {task.started && !task.completed && (
+        <ActiveTaskForm {...{ task, activity }} />
+      )}
     </li>
   )
 }
