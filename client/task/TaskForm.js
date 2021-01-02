@@ -6,7 +6,7 @@ import api from './api'
 
 export default function TaskForm({ id, activity_id, project_id, close }) {
   const { refetch } = api.task.use()
-  const [_, { success }] = alert.useAlert()
+  const { success } = alert.use()
   const properties = {
     name: { type: 'string' },
   }

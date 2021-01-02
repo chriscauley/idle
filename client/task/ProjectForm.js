@@ -6,7 +6,7 @@ import { alert } from '@unrest/core'
 
 export default function ProjectForm(props) {
   const { id } = props.match.params
-  const [_, { success }] = alert.useAlert()
+  const { success } = alert.use()
   const form_name = `ProjectForm${id ? '/' + id : ''}`
   const onSuccess = ({ id }) => {
     api.project.markStale()

@@ -3,51 +3,51 @@ import React from 'react'
 import css from '@unrest/css'
 import { alert } from '@unrest/core'
 
-class BaseDeleteButton extends React.Component {
-  state = {}
-  componentWillUnmount = () => clearTimeout(this.state.timeout)
-  confirm = () => {
-    this.setState({ loading: true })
-    this.props.action().then((result) => {
-      this.setState({ loading: false, clicked: false })
-      const { alert, onDelete = () => {}, name = 'Item' } = this.props
+const noop = () => {}
+export default function DeleteButton({
+  onDelete = noop,
+  name = 'Item',
+  action,
+}) {
+  const [{ loading, clicked }, setState] = React.useState({})
+  const toggle = () => setState({ loading, clicked: !clicked })
+  const { success, error } = alert.use()
+
+  const confirm = () => {
+    setState({ loading: true, clicked })
+    action().then((result = {}) => {
+      setState({})
       if (result.error) {
-        alert.error(result.error)
+        error(result.error)
       } else {
-        alert.success(`${name} has been deleted.`)
+        success(`${name} has been deleted.`)
         onDelete(result)
       }
     })
   }
-  toggle = () => this.setState({ clicked: !this.state.clicked })
-  render() {
-    return (
-      <>
-        {this.state.clicked && (
-          <div className={css.modal.outer()}>
-            <div className={css.modal.mask()} onClick={this.toggle} />
-            <div className={css.modal.content.sm()}>
-              <div className={css.h3()}>
-                Deleting: {this.props.name || 'Item'}
-              </div>
-              Are you sure?
-              <div className="flex justify-between mt-4">
-                <button className={css.button.light()} onClick={this.toggle}>
-                  No
-                </button>
-                <button className={css.button()} onClick={this.confirm}>
-                  Yes
-                </button>
-              </div>
+
+  return (
+    <>
+      {clicked && (
+        <div className={css.modal.outer()}>
+          <div className={css.modal.mask()} onClick={toggle} />
+          <div className={css.modal.content.sm()}>
+            <div className={css.h3()}>Deleting: {name}</div>
+            Are you sure?
+            <div className="flex justify-between mt-4">
+              <button className={css.button.light()} onClick={toggle}>
+                No
+              </button>
+              <button className={css.button()} onClick={confirm}>
+                Yes
+              </button>
             </div>
           </div>
-        )}
-        <a className={css.button.danger()} onClick={this.toggle}>
-          <i className="fa fa-trash" />
-        </a>
-      </>
-    )
-  }
+        </div>
+      )}
+      <a className={css.button.danger()} onClick={toggle}>
+        <i className="fa fa-trash" />
+      </a>
+    </>
+  )
 }
-
-export default alert.connect(BaseDeleteButton)
