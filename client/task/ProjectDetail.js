@@ -49,12 +49,18 @@ export default function ProjectDetail(props) {
         ))}
       </ul>
       {!editing && (
-        <button className={css.button()} onClick={() => setEditing('new')}>
-          <i className={css.icon('plus mr-2')} />
-          Add new task
-        </button>
+        <li className={css.list.item()}>
+          <button className={css.button()} onClick={() => setEditing('new')}>
+            <i className={css.icon('plus mr-2')} />
+            Add new task
+          </button>
+        </li>
       )}
-      {editing === 'new' && <TaskForm project_id={project.id} />}
+      {editing === 'new' && (
+        <li className={css.list.item()}>
+          <TaskForm project_id={project.id} close={() => setEditing(null)} />
+        </li>
+      )}
     </div>
   )
 }

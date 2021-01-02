@@ -4,7 +4,7 @@ import { SchemaForm, alert } from '@unrest/core'
 import { addDays } from 'date-fns'
 import api from './api'
 
-export default function TaskForm({ id, activity_id, project_id }) {
+export default function TaskForm({ id, activity_id, project_id, close }) {
   const { refetch } = api.task.use()
   const [_, { success }] = alert.useAlert()
   const properties = {
@@ -34,6 +34,7 @@ export default function TaskForm({ id, activity_id, project_id }) {
   const onSuccess = () => {
     api.activity.markStale()
     refetch()
+    close()
     success('form saved')
   }
 
@@ -44,6 +45,7 @@ export default function TaskForm({ id, activity_id, project_id }) {
       prepSchema={() => schema}
       prepData={prepData}
       onSuccess={onSuccess}
+      cancel={close}
     />
   )
 }
