@@ -1,8 +1,14 @@
 .task-list {
-  .trigger {
-    @apply cursor-pointer text-2xl mr-3;
+  .fa {
+    @apply cursor-pointer text-2xl;
+  }
+  .name {
+    @apply ml-3;
   }
   .light {
     @apply text-sm text--text-alt;
+  }
+  .dropdown-toggle:after {
+    content: none;
   }
 }

@@ -44,16 +44,17 @@ class ProjectForm(forms.ModelForm):
 @schema.register
 class ActivityForm(forms.ModelForm):
     def save(self, *args, **kwargs):
+        data = self.cleaned_data['data']
         self.instance.user = self.request.user
         return super().save(*args, **kwargs)
     class Meta:
         model = Activity
-        fields = ['data']
+        fields = ['name', 'data']
 
 def validate_user_owns(user, model, id):
     item = model.objects.filter(user=user, id=id).first()
     if id and not item:
-        raise ValidationError(f'User does not have permission to edit {model.__name__} #{id}')
+        raise forms.ValidationError(f'User does not have permission to edit {model.__name__} #{id}')
     return item
 
 def get_users_object(user, model, id):
@@ -62,11 +63,12 @@ def get_users_object(user, model, id):
 @schema.register
 class TaskForm(forms.ModelForm):
     def clean_data(self):
-        data = self.cleaned_data['data']
+        data = self.instance.data
+        data.update(self.cleaned_data['data'])
         self._project = validate_user_owns(self.request.user, Project, data.get('project_id'))
         self._activity = validate_user_owns(self.request.user, Activity, data.get('activity_id'))
-        if data.get('create_activity') and not self._project:
-            raise ValidationError('Cannot create activity without a project.')
+        if data.get('create_activity') and not (self._project or self.instance.project):
+            raise forms.ValidationError('Cannot create activity without a project.')
         return data
     def save(self, *args, **kwargs):
         data = self.cleaned_data['data']
@@ -74,6 +76,7 @@ class TaskForm(forms.ModelForm):
         project_id = data.pop('project_id', None)
         create_activity = data.pop('create_activity', None)
         if create_activity:
+            project_id = (self._project or self.instance.project).id
             activity_id = Activity.objects.create(
                 name=self.instance.name,
                 user=self.request.user,

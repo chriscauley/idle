@@ -1,13 +1,21 @@
 import React from 'react'
-import { SchemaForm } from '@unrest/core'
+
+import { SchemaForm, alert } from '@unrest/core'
 import { addDays } from 'date-fns'
+import api from './api'
 
 export default function TaskForm({ id, activity_id, project_id }) {
+  const { refetch } = api.task.use()
+  const [_, { success }] = alert.useAlert()
   const properties = {
     name: { type: 'string' },
   }
   if (!activity_id) {
-    properties.create_activity = { type: 'boolean', title: 'Create Activity' }
+    properties.create_activity = {
+      type: 'boolean',
+      title: 'Create Activity',
+      default: true,
+    }
   }
   const schema = {
     type: 'object',
@@ -18,9 +26,15 @@ export default function TaskForm({ id, activity_id, project_id }) {
     Object.assign(data, {
       activity_id,
       project_id,
-      due: addDays(new Date(), 1),
+      due: addDays(new Date(), 1).valueOf(),
     })
     return { name, data }
+  }
+
+  const onSuccess = () => {
+    api.activity.markStale()
+    refetch()
+    success('form saved')
   }
 
   const form_name = `TaskForm${id ? '/' + id : ''}`
@@ -29,6 +43,7 @@ export default function TaskForm({ id, activity_id, project_id }) {
       form_name={form_name}
       prepSchema={() => schema}
       prepData={prepData}
+      onSuccess={onSuccess}
     />
   )
 }
