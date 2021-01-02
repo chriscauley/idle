@@ -4,7 +4,7 @@ from todo.models import Activity, Action, Task, Project
 
 @admin.register(Activity)
 class ActivityAdmin(admin.ModelAdmin):
-    pass
+    list_filter = ['project']
 
 
 @admin.register(Action)
@@ -14,7 +14,7 @@ class ActionAdmin(admin.ModelAdmin):
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    pass
+    list_filter = ['project']
 
 
 @admin.register(Project)
