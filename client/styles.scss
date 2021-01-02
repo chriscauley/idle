@@ -2,13 +2,20 @@
   .fa {
     @apply cursor-pointer text-2xl;
   }
-  .name {
-    @apply ml-3;
+  .list-group-item > .trigger {
+    display: inline-block;
+    width: 35px;
   }
   .light {
     @apply text-sm text--text-alt;
   }
   .dropdown-toggle:after {
     content: none;
+  }
+}
+
+.project-detail {
+  h1 .link {
+    @apply mx-4;
   }
 }

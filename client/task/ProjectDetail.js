@@ -9,6 +9,7 @@ import api from './api'
 
 export default function ProjectDetail(props) {
   const [editing, setEditing] = React.useState()
+  const [showCompleted, setShowCompleted] = React.useState()
   const { projects = [] } = api.project.use()
   let { tasks = [] } = api.task.use()
   const id = parseInt(props.match.params.id)
@@ -19,11 +20,28 @@ export default function ProjectDetail(props) {
   }
 
   tasks = tasks.filter((t) => t.project_id === id)
+  if (showCompleted) {
+    tasks = tasks.filter((t) => t.completed)
+  } else {
+    const cutoff = new Date().valueOf() - 300 * 1000
+    tasks = tasks.filter((t) => !t.completed || t.completed > cutoff)
+  }
+  const editIcon = (icon, active) =>
+    css.button[active ? 'secondary' : 'light'](css.icon(icon))
   return (
-    <div>
-      <h1 className="flex justify-between">
+    <div className="project-detail">
+      <h1 className="flex justify-between items-center">
         {project.name}
-        <Link className={css.icon('edit link')} to={`/project/${id}/edit/`} />
+        <span>
+          <Link className={css.icon('edit link')} to={`/project/${id}/edit/`} />
+          <i
+            className={editIcon(
+              'check-square-o completed-trigger',
+              showCompleted,
+            )}
+            onClick={() => setShowCompleted(!showCompleted)}
+          />
+        </span>
       </h1>
       <ul className={css.list.outer('task-list')}>
         {tasks.map((task) => (
