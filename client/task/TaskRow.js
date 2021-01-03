@@ -18,15 +18,15 @@ const getTaskTime = (task) => {
   if (task.completed) {
     return `done ${formatDistanceToNow(new Date(task.completed))} ago`
   } else if (task.started) {
-    return formatDistanceToNow(task.started)
+    return `started ${formatDistanceToNow(new Date(task.started))} ago`
   } else if (task.due) {
     return `due in ${formatDistanceToNow(new Date(task.due))}`
   }
   return ''
 }
 
-const getLinks = (task, activity) => {
-  const links = []
+const getLinks = ({ task, activity, edit }) => {
+  const links = [{ children: 'Edit Task', onClick: edit }]
   if (activity) {
     links.push({
       children: 'Edit Activity',
@@ -38,28 +38,52 @@ const getLinks = (task, activity) => {
       to: `/activity/${task.id}/from_task/`,
     })
   }
+
   return links
 }
 
-function ActiveTaskForm({ task, activity }) {
-  const prepSchema = () => {
-    const properties = {}
-    activity.measurements?.forEach((s) => {
-      properties[s] = {
-        type: 'number',
-        default: task[s],
-      }
-    })
-    return { type: 'object', properties }
+const fields = {
+  DateTime: (value) => ({
+    type: 'string',
+    format: 'date-time',
+    default: value ? new Date(value).toString() : undefined,
+  }),
+}
+
+function ActiveTaskForm({ task, activity, editing, setEditing }) {
+  const properties = {}
+  if (editing) {
+    properties.started = fields.DateTime(task.started)
+    properties.completed = fields.DateTime(task.completed)
   }
+  activity.measurements?.forEach((s) => {
+    properties[s] = {
+      type: 'number',
+      default: task[s],
+    }
+  })
+  if (Object.keys(properties).length === 0) {
+    return null
+  }
+  const schema = { type: 'object', properties }
   return (
     <div className="flex-grow w-full">
       <SchemaForm
-        prepSchema={prepSchema}
+        prepSchema={() => schema}
         form_name={`ActiveTaskForm/${task.id}`}
         autosubmit={true}
         customButton={true}
-      />
+      >
+        {editing && (
+          <button
+            className={css.button()}
+            onClick={() => setEditing(false)}
+            type="button"
+          >
+            Done
+          </button>
+        )}
+      </SchemaForm>
     </div>
   )
 }
@@ -77,13 +101,15 @@ const trigger = ({ _activity, task, refetch }) => {
   post(`/api/task/${task.id}/`, data).then(() => refetch())
 }
 
-export default function TaskRow({ task }) {
+export default function TaskRow({ task, editing, setEditing }) {
   const { refetch, tasks } = api.task.use()
   const { activities } = api.activity.use()
   if (!(tasks && activities)) {
     return null
   }
   const activity = activities.find((a) => a.id === task.activity_id)
+  const showForm = editing || (task.started && !task.completed)
+  const edit = () => setEditing(task.id)
 
   return (
     <li className={css.list.item('flex-wrap')} key={task.id}>
@@ -99,11 +125,11 @@ export default function TaskRow({ task }) {
       </span>
       <span className="flex-grow"></span>
       <Dropdown
-        links={getLinks(task, activity, refetch)}
+        links={getLinks({ task, activity, edit, editing })}
         title={<i className={css.icon('ellipsis-v')} />}
       />
-      {task.started && !task.completed && (
-        <ActiveTaskForm {...{ task, activity }} />
+      {showForm && (
+        <ActiveTaskForm {...{ task, activity, editing, setEditing }} />
       )}
     </li>
   )
