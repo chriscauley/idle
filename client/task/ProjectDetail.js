@@ -45,7 +45,7 @@ export default function ProjectDetail(props) {
       </h1>
       <ul className={css.list.outer('task-list')}>
         {tasks.map((task) => (
-          <TaskRow task={task} key={task.id} />
+          <TaskRow task={task} key={task.id} editing={task.id === editing} />
         ))}
       </ul>
       {!editing && (

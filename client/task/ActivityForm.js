@@ -1,7 +1,7 @@
 import React from 'react'
 import { range } from 'lodash'
 import { SchemaForm } from '@unrest/core'
-import { alert } from '@unrest/core'
+import { alert, post } from '@unrest/core'
 
 import api from './api'
 
@@ -41,4 +41,28 @@ export default function ActivityForm(props) {
     return { name, data }
   }
   return <SchemaForm {...{ form_name, prepSchema, onSuccess, prepData }} />
+}
+
+const loading = {}
+
+export function CreateTaskActivity(props) {
+  const task_id = parseInt(props.match.params.task_id)
+  const { history } = props
+  const { tasks = [] } = api.task.use()
+  const { success } = alert.use()
+  const task = tasks.find((t) => t.id === task_id)
+  if (task && !loading[task.id]) {
+    loading[task.id] = true
+    post(
+      // TODO make this a to instead of onclick to reduce complexity
+      `/api/schema/TaskForm/${task.id}/`,
+      { name: task.name, data: { create_activity: true } },
+    ).then(() => {
+      api.activity.markStale()
+      api.task.markStale()
+      history.replace(`/project/${task.project_id}/`)
+      success(`Created activity for ${task.name}`)
+    })
+  }
+  return null
 }

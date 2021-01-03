@@ -8,7 +8,7 @@ import photo from './photo'
 import Home from './Home'
 import Nav from './Nav'
 import ProjectForm from './task/ProjectForm'
-import ActivityForm from './task/ActivityForm'
+import ActivityForm, { CreateTaskActivity } from './task/ActivityForm'
 import ActivityDetail from './task/ActivityDetail'
 import ProjectDetail from './task/ProjectDetail'
 
@@ -30,6 +30,11 @@ const App = () => {
         <Route exact path={'/project/new/'} component={ProjectForm} />
         <Route exact path={'/project/:id/edit/'} component={ProjectForm} />
         <Route exact path={'/activity/:id/'} component={ActivityDetail} />
+        <Route
+          exact
+          path={'/activity/:task_id/from_task/'}
+          component={CreateTaskActivity}
+        />
         <Route exact path={'/activity/:id/edit/'} component={ActivityForm} />
       </div>
       <alert.List />

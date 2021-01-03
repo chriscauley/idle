@@ -64,7 +64,6 @@ def get_users_object(user, model, id):
 class DataForm(forms.ModelForm):
     def clean_data(self):
         data = self.instance.data
-        print(self.cleaned_data)
         data.update(self.cleaned_data['data'])
         for key in data.keys():
             if key is None:
@@ -82,7 +81,7 @@ class TaskForm(DataForm):
         activity_id = data.pop('activity_id', None)
         project_id = data.pop('project_id', None)
         create_activity = data.pop('create_activity', None)
-        if create_activity:
+        if create_activity and not self.instance.activity:
             project_id = (self._project or self.instance.project).id
             activity_id = Activity.objects.create(
                 name=self.instance.name,

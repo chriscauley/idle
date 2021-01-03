@@ -25,7 +25,7 @@ const getTaskTime = (task) => {
   return ''
 }
 
-const getLinks = (task, activity, refetch) => {
+const getLinks = (task, activity) => {
   const links = []
   if (activity) {
     links.push({
@@ -35,15 +35,7 @@ const getLinks = (task, activity, refetch) => {
   } else {
     links.push({
       children: 'Create Activity',
-      onClick: () =>
-        post(
-          // TODO make this a to instead of onclick to reduce complexity
-          `/api/schema/TaskForm/${task.id}/`,
-          { name: task.name, data: { create_activity: true } },
-        ).then(() => {
-          api.activity.markStale()
-          refetch()
-        }),
+      to: `/activity/${task.id}/from_task/`,
     })
   }
   return links
