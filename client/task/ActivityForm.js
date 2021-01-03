@@ -15,7 +15,7 @@ const prepSchema = (schema) => {
       type: 'array',
       items: {
         type: 'string',
-        enum: ['count', 'reps', 'sets', 'weight'],
+        enum: ['count', 'reps', 'sets', 'lbs', 'cans'],
       },
     },
   }
