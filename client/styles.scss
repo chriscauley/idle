@@ -2,9 +2,8 @@
   .fa {
     @apply cursor-pointer text-2xl;
   }
-  .list-group-item > .trigger {
-    display: inline-block;
-    width: 35px;
+  .list-group-item .trigger {
+    @apply mr-3;
   }
   .light {
     @apply text-sm text--text-alt;

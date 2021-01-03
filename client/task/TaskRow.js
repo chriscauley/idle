@@ -113,21 +113,23 @@ export default function TaskRow({ task, editing, setEditing }) {
 
   return (
     <li className={css.list.item('flex-wrap')} key={task.id}>
-      <div className="trigger">
-        <i
-          className={css.icon(getTaskIcon(task))}
-          onClick={() => trigger({ activity, task, refetch })}
+      <div className="flex w-full items-center">
+        <div className="trigger">
+          <i
+            className={css.icon(getTaskIcon(task))}
+            onClick={() => trigger({ activity, task, refetch })}
+          />
+        </div>
+        <span className="flex-shrink">
+          <div>{task.name}</div>
+          <div className="light">{getTaskTime(task)}</div>
+        </span>
+        <span className="flex-grow"></span>
+        <Dropdown
+          links={getLinks({ task, activity, edit, editing })}
+          title={<i className={css.icon('ellipsis-v')} />}
         />
       </div>
-      <span className="name">
-        {task.name}
-        <div className="light">{getTaskTime(task)}</div>
-      </span>
-      <span className="flex-grow"></span>
-      <Dropdown
-        links={getLinks({ task, activity, edit, editing })}
-        title={<i className={css.icon('ellipsis-v')} />}
-      />
       {showForm && (
         <ActiveTaskForm {...{ task, activity, editing, setEditing }} />
       )}
