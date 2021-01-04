@@ -8,7 +8,6 @@ def weight_to_lbs(apps, schema_editor):
             task.data['lbs'] = task.data.pop('weight')
             task.save()
     for activity in apps.get_model('todo', 'Activity').objects.all():
-        print(activity.data)
         if 'weight' in activity.data.get('measurements', []):
             activity.data['measurements'].remove('weight')
             activity.data['measurements'].append('lbs')

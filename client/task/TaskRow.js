@@ -25,6 +25,14 @@ const getTaskTime = (task) => {
   return ''
 }
 
+const getTaskMeasures = ({ task, activity }) => {
+  const out = []
+  activity?.measurements?.forEach((key) => {
+    out.push(`${key[0]}x${task[key] || 0}`)
+  })
+  return out.join(' ')
+}
+
 const getLinks = ({ task, activity, edit }) => {
   const links = [{ children: 'Edit Task', onClick: edit }]
   if (activity) {
@@ -120,11 +128,13 @@ export default function TaskRow({ task, editing, setEditing }) {
             onClick={() => trigger({ activity, task, refetch })}
           />
         </div>
-        <span className="flex-shrink">
+        <span className="flex-grow">
           <div>{task.name}</div>
-          <div className="light">{getTaskTime(task)}</div>
+          <div className="flex justify-between w-full">
+            <div className="light">{getTaskTime(task)}</div>
+            <div className="light">{getTaskMeasures({ task, activity })}</div>
+          </div>
         </span>
-        <span className="flex-grow"></span>
         <Dropdown
           links={getLinks({ task, activity, edit, editing })}
           title={<i className={css.icon('ellipsis-v')} />}
