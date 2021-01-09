@@ -81,6 +81,7 @@ function ActiveTaskForm({ task, activity, editing, setEditing }) {
         form_name={`ActiveTaskForm/${task.id}`}
         autosubmit={true}
         customButton={true}
+        onSuccess={api.task.markStale}
       >
         {editing && (
           <button
