@@ -87,7 +87,6 @@ function ActiveTaskForm({ task, activity, editing, setEditing }) {
           <button
             className={css.button()}
             onClick={() => setEditing(false)}
-            type="button"
           >
             Done
           </button>
