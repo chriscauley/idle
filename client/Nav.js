@@ -10,11 +10,13 @@ const auth_links = [
   },
 ]
 
+const style = process.env.NODE_ENV === 'development' ? { color: '#f80' } : {}
+
 export default function Nav() {
   return (
     <header className={css.nav.outer()}>
       <section className={css.nav.section()}>
-        <Link to="/" className={css.nav.brand()}>
+        <Link to="/" className={css.nav.brand()} style={style}>
           Idle Hands
         </Link>
       </section>
