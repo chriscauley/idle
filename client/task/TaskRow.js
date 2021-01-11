@@ -12,6 +12,10 @@ const getLinks = ({ task, activity, edit }) => {
       children: 'Edit Activity',
       to: `/activity/${activity.id}/edit/`,
     })
+    links.push({
+      children: 'View Activity',
+      to: `/activity/${activity.id}/`,
+    })
   } else {
     links.push({
       children: 'Create Activity',
