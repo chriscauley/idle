@@ -31,14 +31,18 @@ class Project(BaseModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=64)
     __str__ = lambda self: self.name
+    class Meta:
+        ordering = ('name',)
 
 
 class Activity(DataModel):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    pass
+    class Meta:
+        ordering = ('name',)
 
 
 class Task(DataModel):
     activity = models.ForeignKey(Activity, on_delete=models.CASCADE, null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True, blank=True)
-    pass
+    class Meta:
+        ordering = ('-created',)

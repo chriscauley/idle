@@ -64,10 +64,7 @@ def get_users_object(user, model, id):
 class DataForm(forms.ModelForm):
     def clean_data(self):
         data = self.instance.data
-        data.update(self.cleaned_data['data'])
-        for key in data.keys():
-            if key is None:
-                data.pop(key)
+        data.update(self.cleaned_data['data'] or {})
         self._project = validate_user_owns(self.request.user, Project, data.get('project_id'))
         self._activity = validate_user_owns(self.request.user, Activity, data.get('activity_id'))
         if data.get('create_activity') and not (self._project or self.instance.project):
