@@ -34,7 +34,7 @@ export default function ActivityForm(props) {
     api.activity.markStale()
     refetch()
     success('form saved!')
-    props.history.replace(`/activity/${id}`)
+    props.history.replace(`/activity/${id}/project/`)
   }
 
   const prepData = ({ name, ...data }) => {
