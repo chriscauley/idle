@@ -1,37 +1,9 @@
 import React from 'react'
 import css from '@unrest/css'
 import { post, Dropdown, SchemaForm } from '@unrest/core'
-import { formatDistanceToNow } from 'date-fns'
 
+import Task from './model'
 import api from './api'
-
-const getTaskIcon = (task) => {
-  if (task.completed) {
-    return 'check-square-o'
-  } else if (task.started) {
-    return 'spinner  fa-spin fa-pulse'
-  }
-  return 'square-o'
-}
-
-const getTaskTime = (task) => {
-  if (task.completed) {
-    return `done ${formatDistanceToNow(new Date(task.completed))} ago`
-  } else if (task.started) {
-    return `started ${formatDistanceToNow(new Date(task.started))} ago`
-  } else if (task.due) {
-    return `due in ${formatDistanceToNow(new Date(task.due))}`
-  }
-  return ''
-}
-
-const getTaskMeasures = ({ task, activity }) => {
-  const out = []
-  activity?.measurements?.forEach((key) => {
-    out.push(`${key[0]}x${task[key] || 0}`)
-  })
-  return out.join(' ')
-}
 
 const getLinks = ({ task, activity, edit }) => {
   const links = [{ children: 'Edit Task', onClick: edit }]
@@ -124,15 +96,17 @@ export default function TaskRow({ task, editing, setEditing }) {
       <div className="flex w-full items-center">
         <div className="trigger">
           <i
-            className={css.icon(getTaskIcon(task))}
+            className={css.icon(Task.getIcon(task))}
             onClick={() => trigger({ activity, task, refetch })}
           />
         </div>
         <span className="flex-grow">
           <div>{task.name}</div>
           <div className="flex justify-between w-full">
-            <div className="light">{getTaskTime(task)}</div>
-            <div className="light">{getTaskMeasures({ task, activity })}</div>
+            <div className="light">{Task.getTime(task)}</div>
+            <div className="light">
+              {Task.getShortMeasures({ task, activity })}
+            </div>
           </div>
         </span>
         <Dropdown
