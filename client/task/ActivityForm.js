@@ -15,8 +15,12 @@ const prepSchema = (schema) => {
       type: 'array',
       items: {
         type: 'string',
-        enum: ['count', 'reps', 'sets', 'lbs', 'cans'],
+        enum: ['count', 'reps', 'sets', 'lbs', 'cans', 'pages'],
       },
+    },
+    texts: {
+      type: 'array',
+      items: { type: 'string' },
     },
   }
   Object.entries(data.default || {}).forEach(

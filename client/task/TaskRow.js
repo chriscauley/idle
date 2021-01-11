@@ -36,20 +36,29 @@ const fields = {
 
 function ActiveTaskForm({ task, activity, editing, setEditing }) {
   const properties = {}
+  const required = []
   if (editing) {
     properties.started = fields.DateTime(task.started)
     properties.completed = fields.DateTime(task.completed)
   }
   activity.measurements?.forEach((s) => {
+    required.push(s)
     properties[s] = {
       type: 'number',
+      default: task[s],
+    }
+  })
+  activity.texts?.forEach((s) => {
+    required.push(s)
+    properties[s] = {
+      type: 'string',
       default: task[s],
     }
   })
   if (Object.keys(properties).length === 0) {
     return null
   }
-  const schema = { type: 'object', properties }
+  const schema = { type: 'object', properties, required }
   return (
     <div className="flex-grow w-full">
       <SchemaForm
@@ -60,10 +69,7 @@ function ActiveTaskForm({ task, activity, editing, setEditing }) {
         onSuccess={api.task.markStale}
       >
         {editing && (
-          <button
-            className={css.button()}
-            onClick={() => setEditing(false)}
-          >
+          <button className={css.button()} onClick={() => setEditing(false)}>
             Done
           </button>
         )}
