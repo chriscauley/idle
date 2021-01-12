@@ -9,6 +9,7 @@ import Home from './Home'
 import Nav from './Nav'
 import ProjectForm from './task/ProjectForm'
 import ActivityForm, { CreateTaskActivity } from './task/ActivityForm'
+import ActivityIndex from './task/ActivityIndex'
 import { ActivityProjectRedirect } from './task/ActivityDetail'
 import ProjectDetail from './task/ProjectDetail'
 
@@ -39,6 +40,7 @@ const App = () => {
           path={'/activity/:task_id/from_task/'}
           component={CreateTaskActivity}
         />
+        <Route exact path={'/activity/'} component={ActivityIndex} />
         <Route exact path={'/activity/:id/edit/'} component={ActivityForm} />
       </div>
       <alert.List />

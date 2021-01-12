@@ -2,6 +2,7 @@ import React from 'react'
 import { range } from 'lodash'
 import { SchemaForm } from '@unrest/core'
 import { alert, post } from '@unrest/core'
+import qs from 'querystring'
 
 import api from './api'
 
@@ -34,19 +35,22 @@ const prepSchema = (schema) => {
   Object.entries(data.default || {}).forEach(
     ([name, value]) => (properties[name].default = value),
   )
-  return { type: 'object', properties }
+
+  const required = ['interval', 'name']
+  return { type: 'object', properties, required }
 }
 
 export default function ActivityForm(props) {
   const { id } = props.match.params
   const { success } = alert.use()
   const { refetch } = api.task.use()
+  const { next } = qs.parse(props.location.search.slice(1))
   const form_name = `ActivityForm${id ? '/' + id : ''}`
   const onSuccess = () => {
     api.activity.markStale()
     refetch()
     success('form saved!')
-    props.history.replace(`/activity/${id}/project/`)
+    props.history.replace(next || `/activity/${id}/project/`)
   }
 
   const prepData = ({ name, ...data }) => {
