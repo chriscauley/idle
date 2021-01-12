@@ -42,11 +42,11 @@ const App = () => {
         />
         <Route exact path={'/activity/'} component={ActivityIndex} />
         <Route exact path={'/activity/:id/edit/'} component={ActivityForm} />
+        <Route exact path={'/photo/'} component={photo.MyPhotos} />
+        <auth.Routes />
       </div>
       <alert.List />
       <photo.BulkUpload />
-      <Route exact path={'/photo/'} component={photo.MyPhotos} />
-      <auth.Routes />
     </HashRouter>
   )
 }
