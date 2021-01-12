@@ -29,7 +29,11 @@ const App = () => {
         <Route exact path={'/project/:id/'} component={ProjectDetail} />
         <Route exact path={'/project/new/'} component={ProjectForm} />
         <Route exact path={'/project/:id/edit/'} component={ProjectForm} />
-        <Route exact path={'/activity/:id/project/'} component={ActivityProjectRedirect} />
+        <Route
+          exact
+          path={'/activity/:id/project/'}
+          component={ActivityProjectRedirect}
+        />
         <Route
           exact
           path={'/activity/:task_id/from_task/'}

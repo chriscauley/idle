@@ -37,9 +37,12 @@ const fields = {
 function ActiveTaskForm({ task, activity, editing, setEditing }) {
   const properties = {}
   const required = []
-  if (editing) {
+  if (task.completed) {
     properties.started = fields.DateTime(task.started)
     properties.completed = fields.DateTime(task.completed)
+  }
+  if (!task.started) {
+    properties.due = fields.DateTime(task.due)
   }
   activity.measurements?.forEach((s) => {
     required.push(s)
