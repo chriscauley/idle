@@ -9,7 +9,7 @@ import Home from './Home'
 import Nav from './Nav'
 import ProjectForm from './task/ProjectForm'
 import ActivityForm, { CreateTaskActivity } from './task/ActivityForm'
-import { ActivityProjectRedirect } from './task/ActivityProject'
+import { ActivityProjectRedirect } from './task/ActivityDetail'
 import ProjectDetail from './task/ProjectDetail'
 
 // TODO this is where photos, activities, actions, and things can be cross associated
