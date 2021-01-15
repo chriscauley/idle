@@ -1,21 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import css from '@unrest/css'
-import createTasks from './createTasks'
 
-import TaskRow from './TaskRow'
-import TaskForm from './TaskForm'
+import TaskList from './TaskList'
 import api from './api'
 
 export default function ProjectDetail(props) {
-  const [editing, setEditing] = React.useState()
   const [showCompleted, setShowCompleted] = React.useState()
   const { projects = [] } = api.project.use()
   let { tasks = [] } = api.task.use()
   const id = parseInt(props.match.params.id)
   const project = projects.find((p) => p.id === id)
-
-  createTasks()
 
   if (!project) {
     return null
@@ -45,29 +40,7 @@ export default function ProjectDetail(props) {
           />
         </span>
       </h1>
-      <ul className={css.list.outer('task-list')}>
-        {tasks.map((task) => (
-          <TaskRow
-            task={task}
-            key={task.id}
-            setEditing={setEditing}
-            editing={task.id === editing}
-          />
-        ))}
-      </ul>
-      {!editing && (
-        <li className={css.list.item()}>
-          <button className={css.button()} onClick={() => setEditing('new')}>
-            <i className={css.icon('plus mr-2')} />
-            Add new task
-          </button>
-        </li>
-      )}
-      {editing === 'new' && (
-        <li className={css.list.item()}>
-          <TaskForm project_id={project.id} close={() => setEditing(null)} />
-        </li>
-      )}
+      <TaskList tasks={tasks} project_id={project.id} />
     </div>
   )
 }

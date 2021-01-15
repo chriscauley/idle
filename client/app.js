@@ -12,6 +12,7 @@ import ActivityForm, { CreateTaskActivity } from './task/ActivityForm'
 import ActivityIndex from './task/ActivityIndex'
 import { ActivityProjectRedirect } from './task/ActivityDetail'
 import ProjectDetail from './task/ProjectDetail'
+import DateReport from './task/DateReport'
 
 // TODO this is where photos, activities, actions, and things can be cross associated
 auth.config.prepData = (data) => {
@@ -43,6 +44,7 @@ const App = () => {
         <Route exact path={'/activity/'} component={ActivityIndex} />
         <Route exact path={'/activity/:id/edit/'} component={ActivityForm} />
         <Route exact path={'/photo/'} component={photo.MyPhotos} />
+        <Route exact path={'/report/:date_str/'} component={DateReport} />
         <auth.Routes />
       </div>
       <alert.List />
