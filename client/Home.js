@@ -29,11 +29,6 @@ export default function Home() {
             <OpenTasks tasks={tasks.filter((t) => t.project_id === id)} />
           </Link>
         ))}
-        <li className={css.list.item()}>
-          <Link to="/activity/" className={'link'}>
-            Activity List
-          </Link>
-        </li>
       </div>
       <div>
         <Link className={css.button('inline-block')} to="/project/new/">

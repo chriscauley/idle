@@ -5,6 +5,14 @@ import css from '@unrest/css'
 
 const auth_links = [
   {
+    to: '/activity/',
+    children: 'Activity List',
+  },
+  {
+    to: '/report/today/',
+    children: "Today's Card",
+  },
+  {
     to: '/photo/',
     children: 'Photos',
   },
