@@ -19,15 +19,23 @@ const getDate = (date_str) => {
 }
 
 export default function DateReport(props) {
-  const { title, _date, start, end } = getDate(props.match.params.date_str)
+  const { title, start, end } = getDate(props.match.params.date_str)
   const { tasks: all_tasks } = api.task.use()
   if (!all_tasks) {
     return null
   }
   const _now = new Date().valueOf()
-  const tasks = all_tasks.filter((t) =>
-    isWithinInterval(new Date(t.completed || t.due || _now), { start, end }),
-  )
+  const tasks = all_tasks.filter((t) => {
+    if (title === 'Today' && !t.completed) {
+      // TODO overdue should probably be a flag computed when the model loads
+      const overdue = t.due && isBefore(new Date(t.due), _now)
+      if (overdue || t.started) {
+        return true
+      }
+    }
+    const date = new Date(t.completed || t.due || _now)
+    return isWithinInterval(date, { start, end })
+  })
   return (
     <div>
       <h1>{title}</h1>
