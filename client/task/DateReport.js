@@ -1,11 +1,5 @@
 import React from 'react'
-import {
-  format,
-  startOfDay,
-  endOfDay,
-  isWithinInterval,
-  addDays,
-} from 'date-fns'
+import { format, startOfDay, endOfDay, isWithinInterval, addDays, isBefore } from 'date-fns'
 
 import api from '../task/api'
 import TaskList from '../task/TaskList'

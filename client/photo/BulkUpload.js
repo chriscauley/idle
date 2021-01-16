@@ -1,11 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import {
-  config as ur_config,
-  afterFetch,
-  handleError,
-  alert,
-} from '@unrest/core'
+import { config as ur_config, afterFetch, handleError, alert } from '@unrest/core'
 import progress from '@unrest/react-progress-bar'
 import auth from '@unrest/react-auth'
 import css from '@unrest/css'
@@ -30,9 +25,7 @@ const _onChange = (props) => ({ target }, alert) => {
   })
 
   const onSuccess = (results) => {
-    const success_count = results.filter(({ error }) =>
-      error ? alert.error(error) : true,
-    ).length
+    const success_count = results.filter(({ error }) => (error ? alert.error(error) : true)).length
     success_count && alert.success(`${success_count} uploads successful`)
     props.auth.refetch()
   }
@@ -53,13 +46,7 @@ const Button = progress.connect((props) => {
       {user ? (
         <label className={_btn}>
           <i className={css.icon('file-photo-o')} />
-          <input
-            className="hidden"
-            type="file"
-            accept="image/*"
-            onChange={onChange}
-            multiple
-          />
+          <input className="hidden" type="file" accept="image/*" onChange={onChange} multiple />
         </label>
       ) : (
         <Link to={auth.config.urls.login} className={_btn}>

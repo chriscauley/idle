@@ -17,13 +17,7 @@ export default function PhotoCard(props) {
       <div className="relative">
         <div className="absolute top-0 right-0 m-4">
           <ZoomButton src={src} />
-          {is_owner && (
-            <DeleteButton
-              action={deletePhoto}
-              onDelete={onDelete}
-              name="Photo"
-            />
-          )}
+          {is_owner && <DeleteButton action={deletePhoto} onDelete={onDelete} name="Photo" />}
         </div>
         <img src={thumbnail} />
         <div className="absolute bottom-0 right-0 m-4">

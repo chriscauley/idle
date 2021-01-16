@@ -4,11 +4,7 @@ import css from '@unrest/css'
 import { alert } from '@unrest/core'
 
 const noop = () => {}
-export default function DeleteButton({
-  onDelete = noop,
-  name = 'Item',
-  action,
-}) {
+export default function DeleteButton({ onDelete = noop, name = 'Item', action }) {
   const [{ loading, clicked }, setState] = React.useState({})
   const toggle = () => setState({ loading, clicked: !clicked })
   const { success, error } = alert.use()

@@ -32,9 +32,7 @@ const prepSchema = (schema) => {
       items: { type: 'string' },
     },
   }
-  Object.entries(data.default || {}).forEach(
-    ([name, value]) => (properties[name].default = value),
-  )
+  Object.entries(data.default || {}).forEach(([name, value]) => (properties[name].default = value))
 
   const required = ['interval', 'name']
   return { type: 'object', properties, required }

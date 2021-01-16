@@ -17,8 +17,7 @@ export default function ActivityIndex({ location }) {
   const { activities = [] } = api.activity.use()
   const { projects = [] } = api.project.use()
 
-  const getProjectName = ({ project_id }) =>
-    projects.find((p) => p.id === project_id)?.name
+  const getProjectName = ({ project_id }) => projects.find((p) => p.id === project_id)?.name
   const toForm = ({ id }) => ({
     pathname: `/activity/${id}/edit/`,
     search: `next=${encodeURIComponent(location.pathname)}`,

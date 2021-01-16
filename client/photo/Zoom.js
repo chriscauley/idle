@@ -3,10 +3,7 @@ import React from 'react'
 import css from '@unrest/css'
 
 export const ZoomButton = (props) => (
-  <a
-    href={`#/photo/zoom/${encodeURIComponent(props.src)}/`}
-    className={css.button()}
-  >
+  <a href={`#/photo/zoom/${encodeURIComponent(props.src)}/`} className={css.button()}>
     <i className={css.icon('search-plus')} />
   </a>
 )

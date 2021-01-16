@@ -117,9 +117,7 @@ export default function TaskRow({ task, editing, setEditing }) {
           <div>{task.name}</div>
           <div className="flex justify-between w-full">
             <div className="light">{Task.getTime(task)}</div>
-            <div className="light">
-              {Task.getShortMeasures({ task, activity })}
-            </div>
+            <div className="light">{Task.getShortMeasures({ task, activity })}</div>
           </div>
         </span>
         <Dropdown
@@ -127,9 +125,7 @@ export default function TaskRow({ task, editing, setEditing }) {
           title={<i className={css.icon('ellipsis-v')} />}
         />
       </div>
-      {showForm && (
-        <ActiveTaskForm {...{ task, activity, editing, setEditing }} />
-      )}
+      {showForm && <ActiveTaskForm {...{ task, activity, editing, setEditing }} />}
     </li>
   )
 }

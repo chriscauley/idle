@@ -23,8 +23,7 @@ export default function ProjectDetail(props) {
     const cutoff = new Date().valueOf() - 300 * 1000
     tasks = tasks.filter((t) => !t.completed || t.completed > cutoff)
   }
-  const editIcon = (icon, active) =>
-    css.button[active ? 'secondary' : 'light'](css.icon(icon))
+  const editIcon = (icon, active) => css.button[active ? 'secondary' : 'light'](css.icon(icon))
   return (
     <div className="project-detail">
       <h1 className="flex justify-between items-center">
@@ -32,10 +31,7 @@ export default function ProjectDetail(props) {
         <span>
           <Link className={css.icon('edit link')} to={`/project/${id}/edit/`} />
           <i
-            className={editIcon(
-              'check-square-o completed-trigger',
-              showCompleted,
-            )}
+            className={editIcon('check-square-o completed-trigger', showCompleted)}
             onClick={() => setShowCompleted(!showCompleted)}
           />
         </span>

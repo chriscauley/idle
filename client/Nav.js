@@ -30,10 +30,7 @@ export default function Nav() {
       </section>
       <section className={css.nav.section('flex items-center')}>
         <auth.AuthNav links={auth_links} />
-        <a
-          className="text-blue-500 fa fa-github"
-          href="https://github.com/chriscauley/idle/"
-        />
+        <a className="text-blue-500 fa fa-github" href="https://github.com/chriscauley/idle/" />
       </section>
     </header>
   )
