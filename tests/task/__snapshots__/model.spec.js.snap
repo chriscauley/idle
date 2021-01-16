@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getIcon 1`] = `
+Array [
+  "square-o",
+  "square-o",
+  "spinner fa-spin fa-pulse",
+  "check-square-o",
+]
+`;
+
+exports[`getShortMeasure 1`] = `"m5 e0 c?"`;
+
+exports[`getTime 1`] = `
+Array [
+  "1 hour overdue",
+  "due in 1 hour",
+  "started 1 hour ago",
+  "done 1 day ago",
+]
+`;
+
+exports[`sortByDate 1`] = `"started|due soon|overdue|completed"`;
