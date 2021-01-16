@@ -2,11 +2,13 @@ import React from 'react'
 import css from '@unrest/css'
 import createTasks from './createTasks'
 
+import Task from './model'
 import TaskRow from './TaskRow'
 import TaskForm from './TaskForm'
 
 export default function TaskList({ tasks, project_id }) {
   const [editing, setEditing] = React.useState()
+  tasks = Task.sortByDate(tasks)
   createTasks()
   return (
     <div>

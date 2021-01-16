@@ -1,5 +1,5 @@
-import React from 'react'
-import { formatDistanceToNow } from 'date-fns'
+import { formatDistanceToNowStrict, isPast } from 'date-fns'
+import { sortBy, defaultTo } from 'lodash'
 
 const getIcon = (task) => {
   if (task.completed) {
@@ -12,15 +12,12 @@ const getIcon = (task) => {
 
 const getTime = (task) => {
   if (task.completed) {
-    return `done ${formatDistanceToNow(new Date(task.completed))} ago`
+    return `done ${formatDistanceToNowStrict(new Date(task.completed))} ago`
   } else if (task.started) {
-    return `started ${formatDistanceToNow(new Date(task.started))} ago`
+    return `started ${formatDistanceToNowStrict(new Date(task.started))} ago`
   } else if (task.due) {
-    return (
-      <span title={new Date(task.due)}>{`due in ${formatDistanceToNow(
-        new Date(task.due),
-      )}`}</span>
-    )
+    const delta = formatDistanceToNowStrict(new Date(task.due))
+    return isPast(new Date(task.due)) ? `${delta} overdue` : `due in ${delta}`
   }
   return ''
 }
@@ -28,13 +25,27 @@ const getTime = (task) => {
 const getShortMeasures = ({ task, activity }) => {
   const out = []
   activity?.measurements?.forEach((key) => {
-    out.push(`${key[0]}x${task[key] || 0}`)
+    out.push(`${key[0]}${defaultTo(task[key], '?')}`)
   })
   return out.join(' ')
 }
+
+const sortByDate = (tasks) =>
+  sortBy(tasks, (t) => {
+    // using the fact that timestamps are positive integers in the same order of magnitude
+    // to sort with a priortiy that makes all due completed tasks larger than all due tasks
+    if (t.completed) {
+      return new Date(t.completed).valueOf()
+    }
+    if (t.started) {
+      return -new Date(t.started).valueOf()
+    }
+    return -new Date(t.due).valueOf() / 1000
+  })
 
 export default {
   getIcon,
   getTime,
   getShortMeasures,
+  sortByDate,
 }
