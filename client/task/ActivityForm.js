@@ -1,9 +1,10 @@
 import React from 'react'
-import { range } from 'lodash'
+import { range, uniq } from 'lodash'
 import { SchemaForm } from '@unrest/core'
 import { alert, post } from '@unrest/core'
 import qs from 'querystring'
 
+import { makeTypeahead } from './Typeahead'
 import api from './api'
 
 const prepSchema = (schema) => {
@@ -24,7 +25,7 @@ const prepSchema = (schema) => {
       type: 'array',
       items: {
         type: 'string',
-        enum: ['count', 'reps', 'sets', 'lbs', 'cans', 'pages'],
+        // enum: ['count', 'reps', 'sets', 'lbs', 'cans', 'pages'],
       },
     },
     texts: {
@@ -36,6 +37,25 @@ const prepSchema = (schema) => {
 
   const required = ['interval', 'name']
   return { type: 'object', properties, required }
+}
+
+const getMeasurementsOptions = () => {
+  const { activities = [] } = api.activity.use()
+  return uniq(activities.reduce((acc, item) => acc.concat(item.measurements || []), []))
+}
+
+const getTextsOptions = () => {
+  const { activities = [] } = api.activity.use()
+  return uniq(activities.reduce((acc, item) => acc.concat(item.texts || []), []))
+}
+
+const uiSchema = {
+  measurements: {
+    'ui:field': makeTypeahead(getMeasurementsOptions),
+  },
+  texts: {
+    'ui:field': makeTypeahead(getTextsOptions),
+  },
 }
 
 export default function ActivityForm(props) {
@@ -54,7 +74,7 @@ export default function ActivityForm(props) {
   const prepData = ({ name, ...data }) => {
     return { name, data }
   }
-  return <SchemaForm {...{ form_name, prepSchema, onSuccess, prepData }} />
+  return <SchemaForm {...{ form_name, prepSchema, onSuccess, prepData, uiSchema }} />
 }
 
 const loading = {}
