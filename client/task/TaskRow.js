@@ -1,9 +1,11 @@
+import { uniq } from 'lodash'
 import React from 'react'
 import css from '@unrest/css'
 import { post, Dropdown, SchemaForm } from '@unrest/core'
 
-import Task from './model'
 import api from './api'
+import Task from './model'
+import { makeTypeahead } from './Typeahead'
 
 const getLinks = ({ task, activity, edit }) => {
   const links = [{ children: 'Edit Task', onClick: edit }]
@@ -34,9 +36,24 @@ const fields = {
   }),
 }
 
+const getTextsOptions = (key) => () => {
+  const { tasks = [] } = api.task.use()
+  return uniq(tasks.reduce((acc, item) => acc.concat(item[key] || []), [])).filter(Boolean)
+}
+
 function ActiveTaskForm({ task, activity, editing, setEditing }) {
+  const { setData, tasks } = api.task.use()
+  const onChange = (data) => {
+    // update the task in the /api/task/ rest list so the TaskRow matches the form.
+    // task is already in tasks, so we just re-setData the tasks to update tasks in list.
+    if (Object.keys(data).find((key) => data[key] !== task[key])) {
+      Object.assign(task, data)
+      setData({ tasks })
+    }
+  }
   const properties = {}
   const required = []
+  const uiSchema = {}
   if (task.completed) {
     properties.started = fields.DateTime(task.started)
     properties.completed = fields.DateTime(task.completed)
@@ -57,6 +74,9 @@ function ActiveTaskForm({ task, activity, editing, setEditing }) {
       type: 'string',
       default: task[s],
     }
+    uiSchema[s] = {
+      'ui:field': makeTypeahead(getTextsOptions(s)),
+    }
   })
   if (Object.keys(properties).length === 0) {
     return null
@@ -66,10 +86,11 @@ function ActiveTaskForm({ task, activity, editing, setEditing }) {
     <div className="flex-grow w-full">
       <SchemaForm
         prepSchema={() => schema}
+        onChange={onChange}
+        uiSchema={uiSchema}
         form_name={`ActiveTaskForm/${task.id}`}
         autosubmit={true}
         customButton={true}
-        onSuccess={api.task.markStale}
       >
         {editing && (
           <button className={css.button()} onClick={() => setEditing(false)}>

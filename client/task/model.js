@@ -27,6 +27,9 @@ const getShortMeasures = ({ task, activity }) => {
   activity?.measurements?.forEach((key) => {
     out.push(`${key[0]}${defaultTo(task[key], '?')}`)
   })
+  activity?.texts?.forEach((key) => {
+    out.push(`${key}: ${task[key] || '?'}`)
+  })
   return out.join(' ')
 }
 
