@@ -4,13 +4,11 @@ import css from '@unrest/css'
 
 import api from './api'
 
-const getFrequencyString = ({ interval, per_day }) => {
+const getFrequencyString = ({ interval }) => {
   if (interval === 0) {
     return 'no repeat'
   }
-  return `${per_day === 1 ? 'every' : per_day + 'x / '} ${
-    interval === 1 ? 'day' : interval + ' days'
-  }`
+  return `every ${interval === 1 ? 'day' : interval + ' days'}`
 }
 
 export default function ActivityIndex({ location }) {

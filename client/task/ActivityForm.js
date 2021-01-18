@@ -1,5 +1,5 @@
 import React from 'react'
-import { range, uniq } from 'lodash'
+import { uniq } from 'lodash'
 import { SchemaForm } from '@unrest/core'
 import { alert, post } from '@unrest/core'
 import qs from 'querystring'
@@ -11,11 +11,6 @@ const prepSchema = (schema) => {
   const data = schema.properties.data
   const properties = {
     name: schema.properties.name,
-    per_day: {
-      type: 'number',
-      enum: range(1, 11),
-      default: 1,
-    },
     interval: {
       type: 'number',
       enum: [0, 1, 2, 3, 4, 5, 6, 7, 14, 21, 28],
@@ -23,10 +18,7 @@ const prepSchema = (schema) => {
     },
     measurements: {
       type: 'array',
-      items: {
-        type: 'string',
-        // enum: ['count', 'reps', 'sets', 'lbs', 'cans', 'pages'],
-      },
+      items: { type: 'string' },
     },
     texts: {
       type: 'array',

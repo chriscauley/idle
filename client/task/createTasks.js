@@ -21,7 +21,10 @@ export default () => {
       const last_task = sortBy(activity_tasks, (t) => t.due || 0)
         .reverse()
         .find((t) => t.completed)
-      const due = addDays(max([new Date(last_task?.completed || 0), new Date()]), 1).valueOf()
+      const due = addDays(
+        max([new Date(last_task?.completed || 0), new Date()]),
+        activity?.interval || 1,
+      ).valueOf()
       const { name, project_id } = last_task || activity
       const activity_id = activity.id
       const extras = pick(last_task, activity.texts, activity.measurements)
