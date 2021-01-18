@@ -8,7 +8,11 @@ export default function Typeahead(props) {
   const [focused, setFocused] = React.useState(false)
   const [value, setValue] = React.useState('')
   const id = props.idSchema.$id
-  const { formData = [] } = props
+  let { formData = [] } = props
+  if (typeof formData === 'string') {
+    formData = formData.length === 0 ? [] : formData.split('|')
+  }
+
   const title = props.schema.title || props.name
   const normalized = value.toLowerCase()
   const suggestions = resolveCallable(props.options)
@@ -16,9 +20,11 @@ export default function Typeahead(props) {
     .filter((o) => !formData.includes(o))
   const CUSTOM = suggestions.length
 
+  const change = (data) => props.onChange(props.schema.type === 'string' ? data.join('|') : data)
+
   const remove = (index) => {
     formData.splice(index, 1)
-    props.onChange(formData.slice())
+    change(formData.slice())
     setLength(formData.length || -1)
   }
   const onChange = (e) => {
@@ -36,7 +42,7 @@ export default function Typeahead(props) {
   const add = (item) => {
     if (item && !formData.includes(item)) {
       formData.push(item.trim())
-      props.onChange(formData)
+      change(formData)
       setValue('')
       setLength(formData.length)
     }
@@ -68,7 +74,7 @@ export default function Typeahead(props) {
             <a className={css.icon('close')} />
           </span>
         ))}
-        <input {...{ value, onChange, onKeyDown, onFocus, onBlur }} />
+        <input {...{ id, value, onChange, onKeyDown, onFocus, onBlur }} />
       </div>
       {focused && (
         <ul className="suggestions">
