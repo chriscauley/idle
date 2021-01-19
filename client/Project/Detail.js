@@ -2,8 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import css from '@unrest/css'
 
-import TaskList from './TaskList'
-import api from './api'
+import TaskList from '../task/TaskList'
+import api from '../api'
 
 export default function ProjectDetail(props) {
   const [showCompleted, setShowCompleted] = React.useState()

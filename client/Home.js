@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import api from './task/api'
+import api from './api'
 import css from '@unrest/css'
 
 function OpenTasks({ tasks }) {

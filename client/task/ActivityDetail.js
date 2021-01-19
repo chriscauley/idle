@@ -3,7 +3,7 @@ import { Link, Redirect } from 'react-router-dom'
 import css from '@unrest/css'
 import Task from './model'
 
-import api from './api'
+import api from '../api'
 
 export function ActivityProjectRedirect(props) {
   const id = parseInt(props.match.params.id)

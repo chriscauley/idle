@@ -3,7 +3,7 @@ import React from 'react'
 import css from '@unrest/css'
 import { post, Dropdown, SchemaForm } from '@unrest/core'
 
-import api from './api'
+import api from '../api'
 import Task from './model'
 import { makeTypeahead } from './Typeahead'
 

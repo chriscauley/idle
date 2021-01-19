@@ -2,7 +2,7 @@ import { addDays, max } from 'date-fns'
 import { pick, sortBy } from 'lodash'
 import { post } from '@unrest/core'
 
-import api from './api'
+import api from '../api'
 
 let loading
 

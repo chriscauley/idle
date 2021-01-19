@@ -7,11 +7,10 @@ import auth from '@unrest/react-auth'
 import photo from './photo'
 import Home from './Home'
 import Nav from './Nav'
-import ProjectForm from './task/ProjectForm'
+import Project from './Project'
 import ActivityForm, { CreateTaskActivity } from './task/ActivityForm'
 import ActivityIndex from './task/ActivityIndex'
 import { ActivityProjectRedirect } from './task/ActivityDetail'
-import ProjectDetail from './task/ProjectDetail'
 import DateReport from './task/DateReport'
 
 // TODO this is where photos, activities, actions, and things can be cross associated
@@ -28,9 +27,9 @@ const App = () => {
       <Nav />
       <div className="app-content">
         <Route exact path="/" component={Home} />
-        <Route exact path={'/project/:id/'} component={ProjectDetail} />
-        <Route exact path={'/project/new/'} component={ProjectForm} />
-        <Route exact path={'/project/:id/edit/'} component={ProjectForm} />
+        <Route exact path={'/project/:id/'} component={Project.Detail} />
+        <Route exact path={'/project/new/'} component={Project.Form} />
+        <Route exact path={'/project/:id/edit/'} component={Project.Form} />
         <Route exact path={'/activity/:id/project/'} component={ActivityProjectRedirect} />
         <Route exact path={'/activity/:task_id/from_task/'} component={CreateTaskActivity} />
         <Route exact path={'/activity/'} component={ActivityIndex} />
@@ -40,7 +39,7 @@ const App = () => {
         <auth.Routes />
       </div>
       <alert.List />
-      <photo.BulkUpload />
+      {/* <photo.BulkUpload /> */}
     </HashRouter>
   )
 }

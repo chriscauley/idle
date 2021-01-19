@@ -5,7 +5,7 @@ import { alert, post } from '@unrest/core'
 import qs from 'querystring'
 
 import { makeTypeahead } from './Typeahead'
-import api from './api'
+import api from '../api'
 
 const prepSchema = (schema) => {
   const data = schema.properties.data

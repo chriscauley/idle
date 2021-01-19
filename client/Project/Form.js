@@ -1,8 +1,7 @@
 import React from 'react'
+import { SchemaForm, alert } from '@unrest/core'
 
-import api from './api'
-import { SchemaForm } from '@unrest/core'
-import { alert } from '@unrest/core'
+import api from '../api'
 
 export default function ProjectForm(props) {
   const { id } = props.match.params

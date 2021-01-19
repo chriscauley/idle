@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import css from '@unrest/css'
 
-import api from './api'
+import api from '../api'
 
 const getFrequencyString = ({ interval }) => {
   if (interval === 0) {

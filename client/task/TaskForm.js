@@ -2,7 +2,7 @@ import React from 'react'
 
 import { SchemaForm, alert } from '@unrest/core'
 import { addDays } from 'date-fns'
-import api from './api'
+import api from '../api'
 
 export default function TaskForm({ id, activity_id, project_id, close }) {
   const { refetch } = api.task.use()

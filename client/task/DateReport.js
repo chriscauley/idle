@@ -1,8 +1,8 @@
 import React from 'react'
 import { format, startOfDay, endOfDay, isWithinInterval, addDays, isBefore } from 'date-fns'
 
-import api from '../task/api'
-import TaskList from '../task/TaskList'
+import api from '../api'
+import TaskList from './TaskList'
 
 const getDate = (date_str) => {
   let title = 'Today'
