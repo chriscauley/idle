@@ -8,9 +8,7 @@ import photo from './photo'
 import Home from './Home'
 import Nav from './Nav'
 import Project from './Project'
-import ActivityForm, { CreateTaskActivity } from './task/ActivityForm'
-import ActivityIndex from './task/ActivityIndex'
-import { ActivityProjectRedirect } from './task/ActivityDetail'
+import Activity from './Activity'
 import DateReport from './task/DateReport'
 
 // TODO this is where photos, activities, actions, and things can be cross associated
@@ -30,10 +28,10 @@ const App = () => {
         <Route exact path={'/project/:id/'} component={Project.Detail} />
         <Route exact path={'/project/new/'} component={Project.Form} />
         <Route exact path={'/project/:id/edit/'} component={Project.Form} />
-        <Route exact path={'/activity/:id/project/'} component={ActivityProjectRedirect} />
-        <Route exact path={'/activity/:task_id/from_task/'} component={CreateTaskActivity} />
-        <Route exact path={'/activity/'} component={ActivityIndex} />
-        <Route exact path={'/activity/:id/edit/'} component={ActivityForm} />
+        <Route exact path={'/activity/:id/project/'} component={Activity.ProjectRedirect} />
+        <Route exact path={'/activity/:task_id/from_task/'} component={Activity.CreateTaskActivity} />
+        <Route exact path={'/activity/'} component={Activity.List} />
+        <Route exact path={'/activity/:id/edit/'} component={Activity.Form} />
         <Route exact path={'/photo/'} component={photo.MyPhotos} />
         <Route exact path={'/report/:date_str/'} component={DateReport} />
         <auth.Routes />

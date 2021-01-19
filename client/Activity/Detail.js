@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import css from '@unrest/css'
-import Task from './model'
 
+import Task from '../task/model'
 import api from '../api'
 
 export function ActivityProjectRedirect(props) {
