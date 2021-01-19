@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import css from '@unrest/css'
 
-import TaskList from '../task/TaskList'
+import TaskList from '../Task/TaskList'
 import api from '../api'
 
 export default function ProjectDetail(props) {

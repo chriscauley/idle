@@ -4,7 +4,7 @@ import { SchemaForm } from '@unrest/core'
 import { alert, post } from '@unrest/core'
 import qs from 'querystring'
 
-import { makeTypeahead } from '../task/Typeahead'
+import { makeTypeahead } from '../Task/Typeahead'
 import api from '../api'
 
 const prepSchema = (schema) => {

@@ -9,7 +9,7 @@ import Home from './Home'
 import Nav from './Nav'
 import Project from './Project'
 import Activity from './Activity'
-import DateReport from './task/DateReport'
+import DateReport from './Task/DateReport'
 
 // TODO this is where photos, activities, actions, and things can be cross associated
 auth.config.prepData = (data) => {
