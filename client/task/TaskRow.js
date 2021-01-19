@@ -61,6 +61,12 @@ function ActiveTaskForm({ task, activity, editing, setEditing }) {
   if (!task.started) {
     properties.due = fields.DateTime(task.due)
   }
+  activity.boolean_fields?.forEach((s) => {
+    properties[s] = {
+      type: 'boolean',
+      default: task[s],
+    }
+  })
   activity.measurements?.forEach((s) => {
     required.push(s)
     properties[s] = {

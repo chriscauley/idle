@@ -24,8 +24,14 @@ const prepSchema = (schema) => {
       type: 'array',
       items: { type: 'string' },
     },
+    boolean_fields: {
+      type: 'array',
+      items: { type: 'string' },
+    },
   }
-  Object.entries(data.default || {}).forEach(([name, value]) => (properties[name].default = value))
+  Object.entries(data.default || {})
+    .filter(([name]) => properties[name])
+    .forEach(([name, value]) => (properties[name].default = value))
 
   const required = ['interval', 'name']
   return { type: 'object', properties, required }
@@ -41,12 +47,20 @@ const getTextsOptions = () => {
   return uniq(activities.reduce((acc, item) => acc.concat(item.texts || []), []))
 }
 
+const getBooleanFieldsOptions = () => {
+  const { activities = [] } = api.activity.use()
+  return uniq(activities.reduce((acc, item) => acc.concat(item.boolean_fields || []), []))
+}
+
 const uiSchema = {
   measurements: {
     'ui:field': makeTypeahead(getMeasurementsOptions),
   },
   texts: {
     'ui:field': makeTypeahead(getTextsOptions),
+  },
+  boolean_fields: {
+    'ui:field': makeTypeahead(getBooleanFieldsOptions),
   },
 }
 
